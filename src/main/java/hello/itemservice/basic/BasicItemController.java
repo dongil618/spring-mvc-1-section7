@@ -1,6 +1,7 @@
 package hello.itemservice.basic;
 
 import hello.itemservice.domain.Item;
+import hello.itemservice.dto.ItemParamDto;
 import hello.itemservice.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -82,6 +83,26 @@ public class BasicItemController {
         itemRepository.save(item);
 
         return "basic/item";
+    }
+
+    @GetMapping("/{itemId}/edit")
+    public String editForm(@PathVariable Long itemId, Model model) {
+        Item item = itemRepository.findById(itemId);
+        model.addAttribute("item", item);
+        return "basic/editForm";
+    }
+
+    @PostMapping("/{itemId}/edit")
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute Item item) {
+
+        ItemParamDto updateParam = ItemParamDto.builder()
+                .itemName(item.getItemName())
+                .price(item.getPrice())
+                .quantity(item.getQuantity()).build();
+
+        itemRepository.update(itemId, updateParam);
+
+        return "redirect:/basic/items/{itemId}";
     }
 
     @PostConstruct
