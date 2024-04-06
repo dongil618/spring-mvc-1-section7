@@ -69,7 +69,7 @@ public class BasicItemController {
      * 생략할 시 Class의 앞 글자 소문자로 이름이 자동 생성 ex) HelloData -> helloData, Item -> item ...
      */
     // @PostMapping("/add")
-    public String saveV3(@ModelAttribute Item item, Model model) {
+    public String saveV3(@ModelAttribute Item item) {
 
         itemRepository.save(item);
 
@@ -77,7 +77,7 @@ public class BasicItemController {
     }
 
     @PostMapping("/add")
-    public String saveV4(Item item, Model model) {
+    public String saveV4(Item item) {
 
         itemRepository.save(item);
 
